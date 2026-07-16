@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<meta content="#111827" name="theme-color"/>
+<meta content="dark light" name="color-scheme"/>
+<title>PixelText 2.0 — حوّل الملفات إلى نص واستعدها دون إنترنت</title>
+<meta content="نزّل تطبيق PixelText لأندرويد. حوّل الصور والملفات إلى نص واستعدها لاحقًا، مع معالجة محلية على جهازك ودون رفع الملفات إلى الإنترنت." name="description"/>
+<meta content="PixelText, تحويل الملفات إلى نص, استعادة الملفات, تطبيق أندرويد, دون إنترنت, خصوصية" name="keywords"/>
+<meta content="Omer Elsawy" name="author"/>
+<meta content="index, follow" name="robots"/>
+<link href="https://omerelsawy.github.io/PixelText-App/" rel="canonical"/>
+<meta content="website" property="og:type"/>
+<meta content="ar_AR" property="og:locale"/>
+<meta content="PixelText 2.0 — ملفاتك تتحول إلى نص" property="og:title"/>
+<meta content="تطبيق أندرويد يعمل دون إنترنت لتحويل الملفات إلى نص واستعادتها لاحقًا، مع معالجة محلية تحافظ على خصوصيتك." property="og:description"/>
+<meta content="https://omerelsawy.github.io/PixelText-App/" property="og:url"/>
+<meta content="PixelText" property="og:site_name"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="PixelText 2.0" name="twitter:title"/>
+<meta content="حوّل الملفات إلى نص واستعدها دون إنترنت." name="twitter:description"/>
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "PixelText",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Android 7.0+",
+  "softwareVersion": "2.0",
+  "fileSize": "2.97 MB",
+  "downloadUrl": "https://github.com/OmerElsawy/PixelText-App/releases/download/v2.0.0/PixelText-2.0.apk",
+  "url": "https://omerelsawy.github.io/PixelText-App/",
+  "author": {
+    "@type": "Person",
+    "name": "Omer Elsawy"
+  },
+  "description": "تطبيق أندرويد لتحويل الملفات إلى نص واستعادتها لاحقًا، ويعمل محليًا على الجهاز دون اتصال بالإنترنت.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "image": "https://omerelsawy.github.io/PixelText-App/assets/app-icon.png",
+  "screenshot": [
+    "https://omerelsawy.github.io/PixelText-App/assets/screenshot-home.jpg",
+    "https://omerelsawy.github.io/PixelText-App/assets/screenshot-convert.jpg",
+    "https://omerelsawy.github.io/PixelText-App/assets/screenshot-restore.jpg",
+    "https://omerelsawy.github.io/PixelText-App/assets/screenshot-about.jpg"
+  ]
+}</script>
+<style>
+    :root {
+      --bg: #070b14;
+      --bg-soft: #0d1424;
+      --card: rgba(17, 25, 43, .72);
+      --card-solid: #11192b;
+      --text: #f8fafc;
+      --muted: #a8b3c7;
+      --primary: #8b5cf6;
+      --primary-2: #22d3ee;
+      --success: #34d399;
+      --border: rgba(255, 255, 255, .09);
+      --shadow: 0 30px 80px rgba(0, 0, 0, .35);
+      --radius: 24px;
+      --container: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 5%, rgba(139, 92, 246, .18), transparent 30%),
+        radial-gradient(circle at 85% 18%, rgba(34, 211, 238, .12), transparent 28%),
+        linear-gradient(180deg, #070b14 0%, #0a1020 52%, #070b14 100%);
+      line-height: 1.75;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      opacity: .25;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(to bottom, black, transparent 75%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .container {
+      width: min(calc(100% - 36px), var(--container));
+      margin-inline: auto;
+    }
+
+    .nav {
+      position: relative;
+      z-index: 20;
+      padding: 22px 0;
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      font-weight: 900;
+      font-size: 1.05rem;
+      letter-spacing: -.02em;
+    }
+
+    .brand-mark {
+      position: relative;
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .16);
+      border-radius: 13px;
+      background: linear-gradient(135deg, var(--primary), #6d28d9 48%, var(--primary-2));
+      box-shadow: 0 12px 28px rgba(139, 92, 246, .28);
+      font-size: .82rem;
+      font-weight: 1000;
+    }
+
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      width: 9px;
+      height: 9px;
+      top: 6px;
+      left: 6px;
+      border-radius: 2px;
+      background: rgba(255,255,255,.8);
+      box-shadow: 12px 0 rgba(255,255,255,.4), 0 12px rgba(255,255,255,.35);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-link {
+      padding: 9px 13px;
+      color: var(--muted);
+      border-radius: 12px;
+      font-size: .92rem;
+      font-weight: 700;
+      transition: .2s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+      background: rgba(255,255,255,.055);
+    }
+
+    .hero {
+      position: relative;
+      padding: 64px 0 86px;
+    }
+
+    .hero-grid {
+      min-height: 610px;
+      display: grid;
+      grid-template-columns: 1.08fr .92fr;
+      align-items: center;
+      gap: 72px;
+    }
+
+    .eyebrow {
+      width: fit-content;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 20px;
+      padding: 7px 12px;
+      border: 1px solid rgba(52, 211, 153, .22);
+      border-radius: 999px;
+      color: #b8f7db;
+      background: rgba(52, 211, 153, .075);
+      font-size: .84rem;
+      font-weight: 800;
+    }
+
+    .eyebrow-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 0 5px rgba(52, 211, 153, .10);
+    }
+
+    h1 {
+      max-width: 720px;
+      margin: 0;
+      font-size: clamp(2.65rem, 6vw, 5.1rem);
+      line-height: 1.04;
+      letter-spacing: -.055em;
+      font-weight: 1000;
+    }
+
+    .gradient-text {
+      display: block;
+      color: transparent;
+      background: linear-gradient(90deg, #c4b5fd, #8b5cf6 43%, #67e8f9);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .hero-copy {
+      max-width: 660px;
+      margin: 24px 0 0;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    .btn {
+      min-height: 56px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 13px 21px;
+      border: 1px solid transparent;
+      border-radius: 16px;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 900;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      color: #fff;
+      background: linear-gradient(135deg, #8b5cf6, #6d28d9 55%, #4f46e5);
+      box-shadow: 0 15px 36px rgba(109, 40, 217, .35);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 20px 44px rgba(109, 40, 217, .46);
+    }
+
+    .btn-secondary {
+      color: var(--text);
+      border-color: var(--border);
+      background: rgba(255,255,255,.045);
+      backdrop-filter: blur(14px);
+    }
+
+    .btn-secondary:hover {
+      border-color: rgba(255,255,255,.18);
+      background: rgba(255,255,255,.075);
+    }
+
+    .btn svg {
+      width: 21px;
+      height: 21px;
+      flex: 0 0 auto;
+    }
+
+    .download-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 17px;
+      margin-top: 16px;
+      color: #8996ad;
+      font-size: .83rem;
+      font-weight: 700;
+    }
+
+    .download-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .download-meta span::before {
+      content: "✓";
+      color: var(--success);
+      font-weight: 1000;
+    }
+
+    .visual-wrap {
+      position: relative;
+      min-height: 560px;
+      display: grid;
+      place-items: center;
+      perspective: 1200px;
+    }
+
+    .orb {
+      position: absolute;
+      width: 430px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      filter: blur(1px);
+      background:
+        radial-gradient(circle at 35% 28%, rgba(255,255,255,.22), transparent 13%),
+        linear-gradient(145deg, rgba(139,92,246,.38), rgba(34,211,238,.12));
+      box-shadow: inset 0 0 60px rgba(255,255,255,.04), 0 0 120px rgba(111,76,255,.19);
+    }
+
+    .phone {
+      position: relative;
+      width: min(318px, 80vw);
+      aspect-ratio: .52;
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,.20);
+      border-radius: 46px;
+      background: linear-gradient(145deg, #253047, #090d16 38%);
+      box-shadow: var(--shadow), inset 0 1px rgba(255,255,255,.14);
+      transform: rotateY(-7deg) rotateX(3deg) rotateZ(2deg);
+      animation: float 5s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: rotateY(-7deg) rotateX(3deg) rotateZ(2deg) translateY(0); }
+      50% { transform: rotateY(-5deg) rotateX(2deg) rotateZ(1deg) translateY(-11px); }
+    }
+
+    .speaker {
+      position: absolute;
+      z-index: 3;
+      top: 20px;
+      left: 50%;
+      width: 28%;
+      height: 22px;
+      transform: translateX(-50%);
+      border-radius: 0 0 14px 14px;
+      background: #080c14;
+    }
+
+    .screen {
+      height: 100%;
+      overflow: hidden;
+      border-radius: 35px;
+      background:
+        radial-gradient(circle at 88% 10%, rgba(34,211,238,.16), transparent 24%),
+        radial-gradient(circle at 12% 24%, rgba(139,92,246,.20), transparent 27%),
+        #0b1120;
+    }
+
+    .screen-content {
+      padding: 46px 22px 22px;
+    }
+
+    .app-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #e8edf7;
+      font-size: .76rem;
+      font-weight: 900;
+    }
+
+    .mini-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .mini-logo i {
+      width: 25px;
+      height: 25px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+    }
+
+    .screen-title {
+      margin: 42px 0 8px;
+      font-size: 1.42rem;
+      line-height: 1.25;
+      font-weight: 1000;
+    }
+
+    .screen-sub {
+      margin: 0;
+      color: #93a2bc;
+      font-size: .78rem;
+      line-height: 1.65;
+    }
+
+    .file-card {
+      margin-top: 24px;
+      padding: 16px;
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 20px;
+      background: rgba(255,255,255,.055);
+      box-shadow: inset 0 1px rgba(255,255,255,.04);
+    }
+
+    .file-head {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .file-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      color: #ddd6fe;
+      background: rgba(139,92,246,.18);
+    }
+
+    .file-lines {
+      flex: 1;
+    }
+
+    .line {
+      height: 7px;
+      margin: 5px 0;
+      border-radius: 10px;
+      background: rgba(255,255,255,.15);
+    }
+
+    .line:nth-child(1) { width: 74%; }
+    .line:nth-child(2) { width: 49%; opacity: .65; }
+
+    .progress-track {
+      height: 8px;
+      margin-top: 17px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+    }
+
+    .progress-value {
+      width: 82%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--primary), var(--primary-2));
+      box-shadow: 0 0 16px rgba(34,211,238,.35);
+    }
+
+    .text-card {
+      margin-top: 14px;
+      padding: 15px;
+      border-radius: 17px;
+      background: #080d18;
+      color: #72819a;
+      font: 600 .58rem/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      direction: ltr;
+      text-align: left;
+      word-break: break-all;
+    }
+
+    .screen-button {
+      width: 100%;
+      margin-top: 17px;
+      padding: 13px;
+      border-radius: 14px;
+      text-align: center;
+      background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+      font-size: .77rem;
+      font-weight: 1000;
+    }
+
+    .pixel {
+      position: absolute;
+      width: 19px;
+      height: 19px;
+      border-radius: 5px;
+      background: var(--primary);
+      box-shadow: 0 10px 30px rgba(139,92,246,.4);
+    }
+
+    .pixel.p1 { top: 15%; right: 6%; transform: rotate(13deg); }
+    .pixel.p2 { bottom: 19%; left: 0; width: 13px; height: 13px; background: var(--primary-2); }
+    .pixel.p3 { top: 32%; left: 4%; width: 9px; height: 9px; opacity: .75; }
+
+    section {
+      scroll-margin-top: 24px;
+    }
+
+    .section {
+      padding: 92px 0;
+    }
+
+    .section-heading {
+      max-width: 710px;
+      margin: 0 auto 42px;
+      text-align: center;
+    }
+
+    .section-kicker {
+      display: inline-block;
+      margin-bottom: 9px;
+      color: #a78bfa;
+      font-size: .86rem;
+      font-weight: 1000;
+      letter-spacing: .08em;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      line-height: 1.18;
+      letter-spacing: -.035em;
+    }
+
+    .section-heading p {
+      margin: 15px auto 0;
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .feature {
+      padding: 25px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: linear-gradient(150deg, rgba(255,255,255,.065), rgba(255,255,255,.025));
+      box-shadow: inset 0 1px rgba(255,255,255,.035);
+      transition: transform .2s ease, border-color .2s ease;
+    }
+
+    .feature:hover {
+      transform: translateY(-4px);
+      border-color: rgba(139,92,246,.32);
+    }
+
+    .feature-icon {
+      width: 49px;
+      height: 49px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 18px;
+      border-radius: 15px;
+      color: #d8d1ff;
+      background: linear-gradient(145deg, rgba(139,92,246,.24), rgba(34,211,238,.11));
+      border: 1px solid rgba(139,92,246,.18);
+    }
+
+    .feature-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .feature h3 {
+      margin: 0 0 7px;
+      font-size: 1.07rem;
+    }
+
+    .feature p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    .steps-wrap {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at 100% 0, rgba(139,92,246,.13), transparent 30%),
+        rgba(13,20,36,.68);
+      box-shadow: var(--shadow);
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .step {
+      position: relative;
+      padding: 34px 30px 36px;
+    }
+
+    .step + .step {
+      border-inline-start: 1px solid var(--border);
+    }
+
+    .step-num {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 19px;
+      border-radius: 13px;
+      color: #ddd6fe;
+      background: rgba(139,92,246,.16);
+      font-weight: 1000;
+    }
+
+    .step h3 {
+      margin: 0 0 7px;
+      font-size: 1.08rem;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .93rem;
+    }
+
+    .privacy-card {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 24px;
+      padding: 30px;
+      border: 1px solid rgba(52,211,153,.18);
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at 95% 10%, rgba(52,211,153,.11), transparent 32%),
+        rgba(13,20,36,.72);
+    }
+
+    .shield {
+      width: 68px;
+      height: 68px;
+      display: grid;
+      place-items: center;
+      border-radius: 21px;
+      color: #a7f3d0;
+      background: rgba(52,211,153,.11);
+      border: 1px solid rgba(52,211,153,.16);
+    }
+
+    .shield svg {
+      width: 31px;
+      height: 31px;
+    }
+
+    .privacy-card h3 {
+      margin: 0 0 5px;
+      font-size: 1.27rem;
+    }
+
+    .privacy-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .text-link {
+      white-space: nowrap;
+      color: #b8f7db;
+      font-weight: 900;
+    }
+
+    .text-link:hover {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .faq {
+      max-width: 830px;
+      margin-inline: auto;
+      display: grid;
+      gap: 12px;
+    }
+
+    details {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: rgba(255,255,255,.035);
+    }
+
+    summary {
+      position: relative;
+      cursor: pointer;
+      list-style: none;
+      padding: 19px 54px 19px 20px;
+      font-weight: 900;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary::before,
+    summary::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 21px;
+      width: 15px;
+      height: 2px;
+      border-radius: 2px;
+      background: #a78bfa;
+      transform: translateY(-50%);
+      transition: .2s ease;
+    }
+
+    summary::after {
+      transform: translateY(-50%) rotate(90deg);
+    }
+
+    details[open] summary::after {
+      transform: translateY(-50%) rotate(0);
+    }
+
+    details p {
+      margin: -2px 20px 19px;
+      padding-right: 34px;
+      color: var(--muted);
+      font-size: .94rem;
+    }
+
+    .cta {
+      padding: 78px 0 100px;
+    }
+
+    .cta-card {
+      position: relative;
+      overflow: hidden;
+      padding: 58px 28px;
+      border: 1px solid rgba(255,255,255,.11);
+      border-radius: 34px;
+      text-align: center;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(255,255,255,.16), transparent 13%),
+        linear-gradient(135deg, rgba(109,40,217,.88), rgba(67,56,202,.85) 54%, rgba(8,145,178,.72));
+      box-shadow: 0 30px 80px rgba(79,70,229,.22);
+    }
+
+    .cta-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: .18;
+      background-image:
+        linear-gradient(rgba(255,255,255,.20) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.20) 1px, transparent 1px);
+      background-size: 34px 34px;
+      mask-image: radial-gradient(circle at center, black, transparent 75%);
+    }
+
+    .cta-card > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    .cta h2 {
+      max-width: 720px;
+      margin-inline: auto;
+    }
+
+    .cta p {
+      max-width: 640px;
+      margin: 13px auto 25px;
+      color: rgba(255,255,255,.78);
+    }
+
+    .cta .btn {
+      background: #fff;
+      color: #352174;
+      box-shadow: 0 16px 36px rgba(0,0,0,.18);
+    }
+
+    footer {
+      padding: 25px 0 95px;
+      color: #7f8da5;
+      font-size: .88rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 18px;
+    }
+
+    .footer-links a:hover {
+      color: var(--text);
+    }
+
+    .mobile-download {
+      display: none;
+    }
+
+    .toast {
+      position: fixed;
+      z-index: 100;
+      left: 50%;
+      bottom: 24px;
+      width: min(calc(100% - 30px), 430px);
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 13px 16px;
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: 15px;
+      color: #e9eef7;
+      background: rgba(10,15,27,.94);
+      box-shadow: 0 18px 50px rgba(0,0,0,.4);
+      backdrop-filter: blur(16px);
+      transform: translate(-50%, 150%);
+      opacity: 0;
+      transition: .3s ease;
+      font-size: .89rem;
+      font-weight: 750;
+    }
+
+    .toast.show {
+      transform: translate(-50%, 0);
+      opacity: 1;
+    }
+
+    .toast svg {
+      width: 21px;
+      height: 21px;
+      color: var(--success);
+      flex: 0 0 auto;
+    }
+
+    :focus-visible {
+      outline: 3px solid rgba(34,211,238,.8);
+      outline-offset: 3px;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        padding-top: 28px;
+      }
+
+      .hero-grid {
+        min-height: auto;
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .hero-copy-content {
+        text-align: center;
+      }
+
+      .eyebrow,
+      .hero-actions,
+      .download-meta {
+        justify-content: center;
+        margin-inline: auto;
+      }
+
+      h1,
+      .hero-copy {
+        margin-inline: auto;
+      }
+
+      .visual-wrap {
+        min-height: 500px;
+      }
+
+      .features {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .step + .step {
+        border-inline-start: 0;
+        border-top: 1px solid var(--border);
+      }
+    }
+
+    @media (max-width: 680px) {
+      body {
+        padding-bottom: 77px;
+      }
+
+      .container {
+        width: min(calc(100% - 28px), var(--container));
+      }
+
+      .nav {
+        padding: 15px 0;
+      }
+
+      .nav-links .nav-link:not(:last-child) {
+        display: none;
+      }
+
+      .nav-links .nav-link {
+        padding-inline: 8px;
+      }
+
+      .hero {
+        padding: 34px 0 58px;
+      }
+
+      h1 {
+        font-size: clamp(2.42rem, 12vw, 3.5rem);
+      }
+
+      .hero-copy {
+        font-size: 1rem;
+      }
+
+      .hero-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .visual-wrap {
+        min-height: 450px;
+      }
+
+      .orb {
+        width: 340px;
+      }
+
+      .phone {
+        width: 250px;
+        border-radius: 38px;
+      }
+
+      .screen {
+        border-radius: 29px;
+      }
+
+      .screen-content {
+        padding: 40px 17px 17px;
+      }
+
+      .screen-title {
+        margin-top: 30px;
+        font-size: 1.14rem;
+      }
+
+      .section {
+        padding: 70px 0;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+      .privacy-card {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .shield {
+        margin-inline: auto;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .mobile-download {
+        position: fixed;
+        z-index: 80;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: block;
+        padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+        border-top: 1px solid rgba(255,255,255,.10);
+        background: rgba(7,11,20,.90);
+        backdrop-filter: blur(18px);
+      }
+
+      .mobile-download .btn {
+        min-height: 50px;
+        padding-block: 10px;
+        border-radius: 14px;
+      }
+
+      footer {
+        padding-bottom: 28px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+
+    @media print {
+      .nav, .hero-actions, .mobile-download, .cta, footer {
+        display: none !important;
+      }
+
+      body {
+        color: #111;
+        background: #fff;
+      }
+
+      .feature, .steps-wrap, .privacy-card, details {
+        color: #111;
+        border-color: #ccc;
+        background: #fff;
+      }
+
+      .hero-grid {
+        min-height: auto;
+      }
+
+      .visual-wrap {
+        display: none;
+      }
+    }
+  
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      display: block;
+      flex: 0 0 auto;
+      object-fit: cover;
+      border: 1px solid rgba(255, 255, 255, .16);
+      border-radius: 13px;
+      box-shadow: 0 12px 28px rgba(139, 92, 246, .25);
+    }
+
+    .phone {
+      aspect-ratio: 760 / 1602;
+      padding: 10px;
+    }
+
+    .hero-screen {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    .screenshots-section {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .screenshots-section::before {
+      content: "";
+      position: absolute;
+      inset: 8% auto auto 50%;
+      width: 620px;
+      height: 620px;
+      z-index: -1;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(183, 255, 55, .10), transparent 68%);
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+
+    .screenshots-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+      align-items: start;
+    }
+
+    .screenshot-card {
+      margin: 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 25px;
+      background: rgba(255, 255, 255, .045);
+      box-shadow: 0 22px 55px rgba(0, 0, 0, .22);
+      transition: transform .22s ease, border-color .22s ease;
+    }
+
+    .screenshot-card:hover {
+      transform: translateY(-7px);
+      border-color: rgba(183, 255, 55, .34);
+    }
+
+    .screenshot-card a {
+      display: block;
+      overflow: hidden;
+      background: #f9faf5;
+    }
+
+    .screenshot-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      aspect-ratio: 760 / 1602;
+      object-fit: cover;
+      object-position: top;
+      transition: transform .35s ease;
+    }
+
+    .screenshot-card:hover img {
+      transform: scale(1.018);
+    }
+
+    .screenshot-card figcaption {
+      padding: 14px 16px 16px;
+      color: var(--text);
+      text-align: center;
+      font-size: .92rem;
+      font-weight: 900;
+    }
+
+    @media (max-width: 900px) {
+      .screenshots-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 680px) {
+      .screenshots-grid {
+        display: flex;
+        gap: 14px;
+        margin-inline: -14px;
+        padding: 4px 14px 16px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: thin;
+      }
+
+      .screenshot-card {
+        min-width: min(76vw, 310px);
+        scroll-snap-align: center;
+      }
+    }
+</style>
+<link href="assets/app-icon.png" rel="icon" type="image/png"/><link href="assets/app-icon.png" rel="apple-touch-icon"/><link as-="image" href="assets/screenshot-home.jpg" rel="preload"/><meta content="https://omerelsawy.github.io/PixelText-App/assets/app-icon.png" property="og:image"/><meta content="512" property="og:image:width"/><meta content="512" property="og:image:height"/><meta content="أيقونة تطبيق PixelText" property="og:image:alt"/><meta content="https://omerelsawy.github.io/PixelText-App/assets/app-icon.png" name="twitter:image"/></head>
+<body>
+<header class="nav">
+<div class="container nav-inner">
+<a aria-label="PixelText — الصفحة الرئيسية" class="brand" href="#">
+<img alt="" aria-hidden="true" class="brand-icon" height="42" src="assets/app-icon.png" width="42"/>
+<span>PixelText</span>
+</a>
+<nav aria-label="التنقل الرئيسي" class="nav-links">
+<a class="nav-link" href="#features">المزايا</a><a class="nav-link" href="#screenshots">صور التطبيق</a>
+<a class="nav-link" href="#how">طريقة الاستخدام</a>
+<a class="nav-link" href="#privacy">الخصوصية</a>
+<a class="nav-link" href="https://github.com/OmerElsawy/PixelText-App" rel="noopener noreferrer" target="_blank">GitHub</a>
+</nav>
+</div>
+</header>
+<main>
+<section class="hero">
+<div class="container hero-grid">
+<div class="hero-copy-content">
+<div class="eyebrow">
+<span aria-hidden="true" class="eyebrow-dot"></span>
+            الإصدار 2.0 متاح الآن لأندرويد
+          </div>
+<h1>
+            ملفاتك تتحول إلى نص.
+            <span class="gradient-text">وتعود كما كانت.</span>
+</h1>
+<p class="hero-copy">
+            حوّل الصور والملفات إلى نص يمكنك نسخه ومشاركته، ثم استعد الملف الأصلي على جهاز آخر. كل المعالجة تتم محليًا على هاتفك ودون الحاجة إلى الإنترنت.
+          </p>
+<div class="hero-actions">
+<a aria-label="تنزيل تطبيق PixelText 2.0 بصيغة APK" class="btn btn-primary download-btn" href="https://github.com/OmerElsawy/PixelText-App/releases/download/v2.0.0/PixelText-2.0.apk">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24">
+<path d="M12 3v12"></path>
+<path d="m7 10 5 5 5-5"></path>
+<path d="M5 21h14"></path>
+</svg>
+              تنزيل التطبيق مباشرة
+            </a>
+<a class="btn btn-secondary" href="https://github.com/OmerElsawy/PixelText-App" rel="noopener noreferrer" target="_blank">
+<svg aria-hidden="true" fill="currentColor" viewbox="0 0 24 24">
+<path d="M12 .7a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2.23c-3.22.7-3.9-1.37-3.9-1.37-.52-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.72 1.27 3.38.97.1-.75.4-1.27.74-1.56-2.57-.3-5.27-1.29-5.27-5.68 0-1.26.45-2.28 1.2-3.09-.12-.29-.52-1.46.11-3.05 0 0 .98-.31 3.16 1.18a10.95 10.95 0 0 1 5.74 0c2.19-1.49 3.16-1.18 3.16-1.18.63 1.59.23 2.76.11 3.05.75.81 1.2 1.83 1.2 3.09 0 4.4-2.71 5.38-5.29 5.67.42.36.78 1.07.78 2.16v3.21c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .7Z"></path>
+</svg>
+              صفحة المشروع
+            </a>
+</div>
+<div aria-label="معلومات التطبيق" class="download-meta">
+<span>مجاني</span>
+<span>Android 7.0+</span>
+<span>حجم 2.97 MB</span>
+<span>لا يحتاج حسابًا</span>
+</div>
+</div>
+<div aria-label="تصور توضيحي لواجهة تطبيق PixelText" class="visual-wrap">
+<div aria-hidden="true" class="orb"></div>
+<span aria-hidden="true" class="pixel p1"></span>
+<span aria-hidden="true" class="pixel p2"></span>
+<span aria-hidden="true" class="pixel p3"></span>
+<div class="phone">
+<div aria-hidden="true" class="speaker"></div>
+<div class="screen">
+<img alt="الشاشة الرئيسية لتطبيق PixelText" class="hero-screen" decoding="async" fetchpriority="high" height="1602" src="assets/screenshot-home.jpg" width="760"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="section" id="features">
+<div class="container">
+<div class="section-heading">
+<span class="section-kicker">مزايا PIXELTEXT</span>
+<h2>بسيط في الاستخدام، قوي في الخصوصية</h2>
+<p>الأدوات الأساسية التي تحتاجها لتحويل ملفاتك ومشاركتها واستعادتها بسهولة.</p>
+</div>
+<div class="features">
+<article class="feature">
+<div class="feature-icon">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M4 4h16v16H4z"></path>
+<path d="M8 9h8M8 13h8M8 17h5"></path>
+</svg>
+</div>
+<h3>تحويل الملف إلى نص</h3>
+<p>حوّل الصور والملفات إلى أجزاء نصية قابلة للنسخ والمشاركة.</p>
+</article>
+<article class="feature">
+<div class="feature-icon">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M4 14a8 8 0 1 0 2-5.3L4 11"></path>
+<path d="M4 5v6h6"></path>
+</svg>
+</div>
+<h3>استعادة الملف الأصلي</h3>
+<p>الصق النص كاملًا لاستعادة الملف مع التحقق من سلامته.</p>
+</article>
+<article class="feature">
+<div class="feature-icon">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+<path d="m9 12 2 2 4-4"></path>
+</svg>
+</div>
+<h3>معالجة محلية</h3>
+<p>ملفاتك لا تُرفع إلى خادم خارجي وتبقى تحت سيطرتك.</p>
+</article>
+<article class="feature">
+<div class="feature-icon">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+<path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+<path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+<path d="M12 20h.01"></path>
+<path d="m3 3 18 18"></path>
+</svg>
+</div>
+<h3>يعمل دون إنترنت</h3>
+<p>وظائف التحويل والاستعادة متاحة حتى دون اتصال بالشبكة.</p>
+</article>
+<article class="feature">
+<div class="feature-icon">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<circle cx="12" cy="12" r="10"></circle>
+<path d="M2 12h20"></path>
+<path d="M12 2a15 15 0 0 1 0 20"></path>
+<path d="M12 2a15 15 0 0 0 0 20"></path>
+</svg>
+</div>
+<h3>العربية والإنجليزية</h3>
+<p>واجهة مناسبة للهاتف ومتاحة باللغتين العربية والإنجليزية.</p>
+</article>
+<article class="feature">
+<div class="feature-icon">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<rect height="18" rx="2" width="18" x="3" y="3"></rect>
+<path d="m10 8 6 4-6 4Z"></path>
+</svg>
+</div>
+<h3>دعم الفيديو التجريبي</h3>
+<p>يمكن تحويل ملفات الفيديو، وقد تستغرق الملفات الكبيرة وقتًا أطول.</p>
+</article>
+</div>
+</div>
+</section><section class="section screenshots-section" id="screenshots">
+<div class="container">
+<div class="section-heading">
+<span class="section-kicker">صور التطبيق</span>
+<h2>واجهة واضحة لكل خطوة</h2>
+<p>تعرّف على الشاشة الرئيسية، وتحويل الصور، واستعادة الملفات، ومعلومات التطبيق.</p>
+</div>
+<div aria-label="لقطات شاشة تطبيق PixelText" class="screenshots-grid">
+<figure class="screenshot-card">
+<a href="assets/screenshot-home.jpg" rel="noopener" target="_blank">
+<img alt="الشاشة الرئيسية لتطبيق PixelText" decoding="async" height="1602" loading="lazy" src="assets/screenshot-home.jpg" width="760"/>
+</a>
+<figcaption>الشاشة الرئيسية</figcaption>
+</figure>
+<figure class="screenshot-card">
+<a href="assets/screenshot-convert.jpg" rel="noopener" target="_blank">
+<img alt="شاشة تحويل الصورة إلى نص في PixelText" decoding="async" height="1602" loading="lazy" src="assets/screenshot-convert.jpg" width="760"/>
+</a>
+<figcaption>تحويل صورة إلى نص</figcaption>
+</figure>
+<figure class="screenshot-card">
+<a href="assets/screenshot-restore.jpg" rel="noopener" target="_blank">
+<img alt="شاشة استعادة الملف من النص في PixelText" decoding="async" height="1594" loading="lazy" src="assets/screenshot-restore.jpg" width="760"/>
+</a>
+<figcaption>استعادة الملف</figcaption>
+</figure>
+<figure class="screenshot-card">
+<a href="assets/screenshot-about.jpg" rel="noopener" target="_blank">
+<img alt="شاشة معلومات تطبيق PixelText" decoding="async" height="1601" loading="lazy" src="assets/screenshot-about.jpg" width="760"/>
+</a>
+<figcaption>معلومات التطبيق</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section class="section" id="how">
+<div class="container">
+<div class="section-heading">
+<span class="section-kicker">كيف يعمل؟</span>
+<h2>ثلاث خطوات فقط</h2>
+<p>لا تحتاج إلى حساب أو إعدادات معقدة للبدء.</p>
+</div>
+<div class="steps-wrap">
+<div class="steps">
+<article class="step">
+<div class="step-num">1</div>
+<h3>اختر الملف</h3>
+<p>حدد صورة أو ملفًا من خلال منتقي الملفات في هاتفك.</p>
+</article>
+<article class="step">
+<div class="step-num">2</div>
+<h3>انسخ النص</h3>
+<p>يحوّل PixelText الملف إلى نص يمكنك نسخه أو مشاركته.</p>
+</article>
+<article class="step">
+<div class="step-num">3</div>
+<h3>استعده لاحقًا</h3>
+<p>الصق جميع أجزاء النص في التطبيق لاستعادة الملف الأصلي.</p>
+</article>
+</div>
+</div>
+</div>
+</section>
+<section class="section" id="privacy">
+<div class="container">
+<div class="privacy-card">
+<div class="shield">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+<path d="M9 12.5 11 14l4-4"></path>
+</svg>
+</div>
+<div>
+<h3>خصوصيتك أولًا</h3>
+<p>لا إعلانات، لا تحليلات، لا حسابات مستخدمين، ولا رفع لملفاتك إلى الإنترنت. تتم المعالجة محليًا على جهازك.</p>
+</div>
+<a class="text-link" href="https://github.com/OmerElsawy/PixelText-App/blob/main/PRIVACY_POLICY.md" rel="noopener noreferrer" target="_blank">سياسة الخصوصية ←</a>
+</div>
+</div>
+</section>
+<section class="section" id="faq">
+<div class="container">
+<div class="section-heading">
+<span class="section-kicker">الأسئلة الشائعة</span>
+<h2>قبل أن تبدأ</h2>
+</div>
+<div class="faq">
+<details>
+<summary>هل التطبيق يحتاج إلى الإنترنت؟</summary>
+<p>لا. تعمل وظائف تحويل الملفات واستعادتها دون اتصال بالإنترنت.</p>
+</details>
+<details>
+<summary>هل يتم رفع ملفاتي إلى أي خادم؟</summary>
+<p>لا. تتم معالجة الملفات محليًا على جهازك، ولا يرسل التطبيق محتواها إلى المطوّر أو إلى طرف خارجي.</p>
+</details>
+<details>
+<summary>كيف أثبّت ملف APK؟</summary>
+<p>بعد اكتمال التنزيل، افتح الملف. قد يطلب Android السماح بالتثبيت من المتصفح أو مدير الملفات؛ فعّل الإذن لهذا المصدر فقط ثم أكمل التثبيت.</p>
+</details>
+<details>
+<summary>لماذا ينتج نص طويل مع الملفات الكبيرة؟</summary>
+<p>النص يحتوي على بيانات الملف نفسها، لذلك يزداد طوله بزيادة حجم الملف. احتفظ بجميع الأجزاء وبالترتيب الصحيح حتى تتم الاستعادة بنجاح.</p>
+</details>
+<details>
+<summary>ما أنظمة أندرويد المدعومة؟</summary>
+<p>يعمل PixelText 2.0 على Android 7.0 أو أحدث.</p>
+</details>
+</div>
+</div>
+</section>
+<section class="cta">
+<div class="container">
+<div class="cta-card">
+<h2>نزّل PixelText واحتفظ بملفاتك تحت سيطرتك</h2>
+<p>الإصدار 2.0 متاح الآن مجانًا بصيغة APK لأجهزة Android 7.0 والأحدث.</p>
+<a aria-label="تنزيل PixelText 2.0 الآن" class="btn download-btn" href="https://github.com/OmerElsawy/PixelText-App/releases/download/v2.0.0/PixelText-2.0.apk">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24">
+<path d="M12 3v12"></path>
+<path d="m7 10 5 5 5-5"></path>
+<path d="M5 21h14"></path>
+</svg>
+            تنزيل PixelText 2.0
+          </a>
+</div>
+</div>
+</section>
+</main>
+<footer>
+<div class="container footer-inner">
+<div>© <span id="year">2026</span> PixelText — تطوير عمر الصاوي</div>
+<div class="footer-links">
+<a href="https://github.com/OmerElsawy/PixelText-App" rel="noopener noreferrer" target="_blank">المشروع على GitHub</a>
+<a href="https://github.com/OmerElsawy/PixelText-App/blob/main/PRIVACY_POLICY.md" rel="noopener noreferrer" target="_blank">الخصوصية</a>
+<a href="mailto:contact@omerelsawy.xyz">تواصل</a>
+</div>
+</div>
+</footer>
+<div class="mobile-download">
+<a aria-label="تنزيل PixelText 2.0 مباشرة" class="btn btn-primary download-btn" href="https://github.com/OmerElsawy/PixelText-App/releases/download/v2.0.0/PixelText-2.0.apk">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24">
+<path d="M12 3v12"></path>
+<path d="m7 10 5 5 5-5"></path>
+<path d="M5 21h14"></path>
+</svg>
+      تنزيل التطبيق — 2.97 MB
+    </a>
+</div>
+<div aria-live="polite" class="toast" id="toast" role="status">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" viewbox="0 0 24 24">
+<circle cx="12" cy="12" r="9"></circle>
+<path d="M12 7v6m0 4h.01"></path>
+</svg>
+<span>بدأ التنزيل. افتح ملف APK بعد اكتماله لتثبيت التطبيق.</span>
+</div>
+<noscript>
+<div style="position:fixed;right:12px;bottom:12px;left:12px;z-index:200;padding:12px;border-radius:12px;background:#fff;color:#111;text-align:center">
+      تعمل الصفحة دون JavaScript، ويمكنك استخدام زر التنزيل بصورة طبيعية.
+    </div>
+</noscript>
+<script>
+    (() => {
+      "use strict";
+
+      const toast = document.getElementById("toast");
+      const downloadButtons = document.querySelectorAll(".download-btn");
+      let toastTimer;
+
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      downloadButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          clearTimeout(toastTimer);
+          toast.classList.add("show");
+          toastTimer = setTimeout(() => toast.classList.remove("show"), 5000);
+        });
+      });
+
+      document.querySelectorAll("details").forEach((item) => {
+        item.addEventListener("toggle", () => {
+          if (!item.open) return;
+          document.querySelectorAll("details").forEach((other) => {
+            if (other !== item) other.open = false;
+          });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

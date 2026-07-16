@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://omerelsawy.github.io/PixelText-App/</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+
+    <image:image>
+      <image:loc>https://omerelsawy.github.io/PixelText-App/assets/app-icon.png</image:loc>
+      <image:title>أيقونة تطبيق PixelText</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://omerelsawy.github.io/PixelText-App/assets/screenshot-home.jpg</image:loc>
+      <image:title>الشاشة الرئيسية لتطبيق PixelText</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://omerelsawy.github.io/PixelText-App/assets/screenshot-convert.jpg</image:loc>
+      <image:title>تحويل صورة إلى نص في PixelText</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://omerelsawy.github.io/PixelText-App/assets/screenshot-restore.jpg</image:loc>
+      <image:title>استعادة ملف من النص في PixelText</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://omerelsawy.github.io/PixelText-App/assets/screenshot-about.jpg</image:loc>
+      <image:title>معلومات تطبيق PixelText</image:title>
+    </image:image>
+  </url>
+</urlset>
